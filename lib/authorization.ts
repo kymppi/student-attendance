@@ -1,7 +1,7 @@
 import type { Value } from '@cerbos/core';
 import { GRPC } from '@cerbos/grpc';
+import prisma from '@lib/prisma-client';
 import { User } from '@prisma/client';
-import prisma from './prisma-client';
 
 const cerbos = new GRPC(process.env.CERBOS_GRPC || 'localhost:3593', {
   tls: false,

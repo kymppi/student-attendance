@@ -1,9 +1,9 @@
+import { authOptions } from '@/lib/auth-options';
+import { authorize } from '@/lib/authorization';
 import type { Value } from '@cerbos/core';
 import { User } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Session, getServerSession } from 'next-auth';
-import { authOptions } from '../pages/api/auth/[...nextauth]';
-import { authorize } from './authorization';
 
 export const protect = async (
   req: NextApiRequest,

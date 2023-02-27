@@ -1,4 +1,5 @@
-// _app.tsx
+import { authOptions } from '@/lib/auth-options';
+import { rtlCache } from '@/lib/rtl-cache';
 import {
   Button,
   ColorScheme,
@@ -11,8 +12,6 @@ import { Session, getServerSession } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import { AppProps } from 'next/app';
 import { useState } from 'react';
-import { rtlCache } from '../lib/rtl-cache';
-import { authOptions } from './api/auth/[...nextauth]';
 
 export default function App(
   props: AppProps & { colorScheme: ColorScheme; session: Session | null }

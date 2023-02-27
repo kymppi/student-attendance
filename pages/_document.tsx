@@ -1,7 +1,7 @@
 // _document.tsx
+import { rtlCache } from '@/lib/rtl-cache';
 import { ServerStyles, createStylesServer } from '@mantine/next';
 import Document, { DocumentContext } from 'next/document';
-import { rtlCache } from '../lib/rtl-cache';
 
 const stylesServer = createStylesServer(rtlCache);
 
