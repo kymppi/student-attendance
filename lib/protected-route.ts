@@ -1,4 +1,5 @@
 import type { Value } from '@cerbos/core';
+import { User } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Session, getServerSession } from 'next-auth';
 import { authOptions } from '../pages/api/auth/[...nextauth]';
@@ -10,13 +11,13 @@ export const protect = async (
   action: string,
   resource: string,
   resourceData: (_session: Session) => Record<string, Value>
-) => {
+): Promise<Error | { session: Session; user: User }> => {
   const session = await getServerSession(req, res, authOptions);
 
   if (!session) {
     res.status(401).send({ error: 'Unauthorized' });
 
-    return false;
+    return new Error('Unauthorized');
   }
 
   const { authorized, user } = await authorize(
@@ -28,8 +29,11 @@ export const protect = async (
 
   if (!authorized) {
     res.status(403).send({ error: 'Invalid permissions' });
+    console.log(
+      `User '${session.userId}' tried to access ${req.url} without ${action} permission.`
+    );
 
-    return false;
+    return new Error('Invalid permissions');
   }
 
   return { session: session, user };

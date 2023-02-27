@@ -9,8 +9,4 @@ resourcePolicy:
       effect: EFFECT_ALLOW
       derivedRoles:
         - admin
-
-    - actions: ['read:self']
-      effect: EFFECT_ALLOW
-      derivedRoles:
-        - all_users
+        - student # temporary

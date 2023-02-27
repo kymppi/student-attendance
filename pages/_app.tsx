@@ -6,12 +6,17 @@ import {
   MantineProvider,
 } from '@mantine/core';
 import { setCookies } from 'cookies-next';
+import { GetServerSidePropsContext } from 'next';
+import { Session, getServerSession } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import { AppProps } from 'next/app';
 import { useState } from 'react';
 import { rtlCache } from '../lib/rtl-cache';
+import { authOptions } from './api/auth/[...nextauth]';
 
-export default function App(props: AppProps & { colorScheme: ColorScheme }) {
+export default function App(
+  props: AppProps & { colorScheme: ColorScheme; session: Session | null }
+) {
   const { Component, pageProps } = props;
   const [colorScheme, setColorScheme] = useState<ColorScheme>(
     props.colorScheme
@@ -41,7 +46,7 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
           withNormalizeCSS
           emotionCache={rtl ? rtlCache : undefined}
         >
-          <SessionProvider>
+          <SessionProvider session={props.session}>
             <Button onClick={() => setRtl((c) => !c)}>Toggle direction</Button>
             <Component {...pageProps} />
           </SessionProvider>
@@ -49,4 +54,15 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
       </ColorSchemeProvider>
     </div>
   );
+}
+
+export async function getServerSideProps({
+  req,
+  res,
+}: GetServerSidePropsContext) {
+  return {
+    props: {
+      session: await getServerSession(req, res, authOptions),
+    },
+  };
 }

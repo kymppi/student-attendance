@@ -1,7 +1,9 @@
 import LoginButton from '@components/LoginButton';
+import { useSession } from 'next-auth/react';
 import Head from 'next/head';
 
 export default function Home() {
+  const { data: session } = useSession();
   return (
     <>
       <Head>
@@ -12,6 +14,7 @@ export default function Home() {
       </Head>
       <main>
         <LoginButton />
+        <pre>{JSON.stringify(session, null, 2)}</pre>
       </main>
     </>
   );
