@@ -1,0 +1,15 @@
+apiVersion: 'api.cerbos.dev/v1'
+derivedRoles:
+  name: common_roles
+  definitions:
+    - name: all_users
+      parentRoles: ['ADMIN', 'PROFESSOR', 'STUDENT']
+
+    - name: admin
+      parentRoles: ['ADMIN']
+
+    - name: professor
+      parentRoles: ['PROFESSOR']
+
+    - name: student
+      parentRoles: ['STUDENT']

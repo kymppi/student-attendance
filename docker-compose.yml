@@ -12,3 +12,11 @@ services:
       - ./database:/data/postgres
     ports:
       - "5432:5432"
+  cerbos:
+    image: 'ghcr.io/cerbos/cerbos:latest'
+    ports:
+      - '3593:3593'
+      - '3592:3592'
+    volumes:
+      - './cerbos:/settings'
+    command: server --config=/settings/conf.yaml
